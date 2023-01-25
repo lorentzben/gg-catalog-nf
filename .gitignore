@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+/ampliseq_results/
+/cec_raw_nf/
+/docker/microbiome_analyst/.Rprofile
+/docker/microbiome_analyst/dependencies.R
+/docker/microbiome_analyst/docker_build/
+/docker/microbiome_analyst/mnt.Rproj
+/docker/microbiome_analyst/renv/
+/docker/renv.lock
+/richness_comparisions/
