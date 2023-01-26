@@ -52,13 +52,21 @@ process FILTLONG{
     path reads
 
     output:
-    path ("*_filtered.fastq"), emit: filtered
+    path ("*.fastq.gz"), emit: filtered
 
     script:
     '''
     #!/usr/bin/env bash
 
-    echo "Hello World"
+    READS="*.fastq"
+    
+
+    for read in $READS; do
+        READNAME=$read[::-6]
+        filtlong --min_length 2000 --keep_percent 99 $read | gzip > $READNAME.fastq.gz
+    done
+
+    
     '''
 }
 
