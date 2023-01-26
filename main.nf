@@ -10,7 +10,7 @@ params.outdir = "results"
 log.info """\
          V I S U A L I Z E   P I P E L I N E    
          ===================================
-         input    : ${params.input }
+         input    : ${params.input}
          metadata : ${params.metadata}
          outdir   : ${params.outdir}
          profile : ${workflow.profile}
@@ -42,6 +42,32 @@ process TEST{
     ls $input
 
     '''
+
+}
+
+process FILTLONG{
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:1.0' : 'lorentzb/filtlong:1.0' }"
+
+    input: 
+    path reads
+
+    output:
+    path ("*_filtered.fastq"), emit: filtered
+
+    script:
+    '''
+    #!/usr/bin/env bash
+
+    echo "Hello World"
+    '''
+}
+
+process MINIMAP{
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/minimap2:1.0' : 'lorentzb/minimap2:1.0' }"
+
+}
+
+process READTABLE{
 
 }
 
