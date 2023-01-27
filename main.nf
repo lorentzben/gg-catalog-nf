@@ -63,6 +63,8 @@ workflow {
 
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
+    print(ch_reads)
+    print(ch_fasta)
     TEST(input_ch)
     
 }
