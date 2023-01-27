@@ -135,7 +135,3 @@ process MINIMAP{
     '''
 }
 
-process READTABLE{
-
-}
-
