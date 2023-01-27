@@ -11,7 +11,8 @@ nextflow.enable.dsl=2
 // Input
 
 params.input = null
-
+pacbio = false
+iontorrent = false
 single_end = params.single_end
 if (params.pacbio || params.iontorrent) {
     single_end = true
@@ -32,7 +33,9 @@ log.info """\
          V I S U A L I Z E   P I P E L I N E    
          ===================================
          input    : ${params.input}
-         single_end: ${params.single_end}
+         single_end : ${params.single_end}
+         pacbio : ${params.pacbio}
+         iontorrent : ${params.iontorrent}
          multiple seq runs: ${params.multiple_sequencing_runs}
          extension : ${params.extension}
          metadata : ${params.metadata}
