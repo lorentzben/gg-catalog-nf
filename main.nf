@@ -11,8 +11,9 @@ nextflow.enable.dsl=2
 // Input
 
 params.input = null
-pacbio = false
-iontorrent = false
+params.pacbio = false
+params.iontorrent = false
+params.single_end = false
 single_end = params.single_end
 if (params.pacbio || params.iontorrent) {
     single_end = true
@@ -48,9 +49,10 @@ log.info """\
   It is common to name processes with UPPERCASE strings, to make
   the program more readable (this is of course not mandatory)
 */
-include { FILTLONG } from '../modules/nf-core/filtlong/main'
-include { MINIMAP2_ALIGN } from '../modules/nf-core/minimap2/align/main'
-include { MINIMAP2_INDEX } from '../modules/nf-core/minimap2/index/main'
+//if don't work use projectDir
+include { FILTLONG } from '${moduleDir}/modules/nf-core/filtlong/main'
+include { MINIMAP2_ALIGN } from '${moduleDir}/modules/nf-core/minimap2/align/main'
+include { MINIMAP2_INDEX } from '${moduleDir}/modules/nf-core/minimap2/index/main'
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
