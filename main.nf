@@ -53,6 +53,7 @@ log.info """\
 include { FILTLONG } from "${moduleDir}/modules/nf-core/filtlong/main"
 include { MINIMAP2_ALIGN } from "${moduleDir}/modules/nf-core/minimap2/align/main"
 include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/main"
+include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
