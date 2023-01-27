@@ -26,7 +26,7 @@ params.extension = "/*_R{1,2}_001.fastq.gz"
 String[] fasta_extensions = [".fasta", ".fna", ".fa"] // this is the alternative ASV fasta input
 is_fasta_input = WorkflowGGCat.checkIfFileHasExtension( params.input.toString().toLowerCase(), fasta_extensions )
 
-params.metadata = "${projectDir}/metadata.tsv"
+
 params.outdir = "results"
 
 log.info """\
@@ -38,7 +38,6 @@ log.info """\
          iontorrent : ${params.iontorrent}
          multiple seq runs: ${params.multiple_sequencing_runs}
          extension : ${params.extension}
-         metadata : ${params.metadata}
          outdir   : ${params.outdir}
          profile : ${workflow.profile}
          """
@@ -66,8 +65,6 @@ workflow {
 
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
-    print(ch_reads)
-    print(ch_fasta)
     TEST(input_ch)
     
 }
@@ -76,7 +73,8 @@ process TEST{
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/tidyverse:4.2.0' : 'lorentzb/tidyverse:4.2.0' }"
 
     input: 
-    path input
+    path reads
+    path fasta
 
     output:
     
@@ -85,8 +83,8 @@ process TEST{
     '''
     #!/usr/bin/env bash
 
-    echo "Test"
-    ls $input
+    echo $reads
+    echo $fasta
 
     '''
 
