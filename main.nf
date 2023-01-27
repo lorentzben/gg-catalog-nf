@@ -82,14 +82,16 @@ process TEST{
     path fasta
 
     output:
+    path "reads.txt"
+    path "fasta.txt"
     
     script:
 
     '''
     #!/usr/bin/env bash
 
-    echo $reads
-    echo $fasta
+    echo $reads > reads.txt
+    echo $fasta > fasta.txt
 
     '''
 
