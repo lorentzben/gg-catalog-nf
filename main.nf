@@ -6,7 +6,6 @@ params.input = "${projectDir}/reads"
 params.metadata = "${projectDir}/metadata.tsv"
 params.outdir = "results"
 
-
 log.info """\
          V I S U A L I Z E   P I P E L I N E    
          ===================================
@@ -16,6 +15,16 @@ log.info """\
          profile : ${workflow.profile}
          """
          .stripIndent()
+
+/*
+  Import processes from external files
+  It is common to name processes with UPPERCASE strings, to make
+  the program more readable (this is of course not mandatory)
+*/
+include { FILTLONG } from '../modules/nf-core/filtlong/main'
+include { MINIMAP2_ALIGN } from '../modules/nf-core/minimap2/align/main'
+include { MINIMAP2_INDEX } from '../modules/nf-core/minimap2/index/main'
+
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
 
