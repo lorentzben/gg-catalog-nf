@@ -21,6 +21,7 @@ if (params.pacbio || params.iontorrent) {
 
 params.multiple_sequencing_runs = false
 params.extension = "/*_R{1,2}_001.fastq.gz"
+params.metadata = null
 
 // Set non-params Variables
 
@@ -39,6 +40,7 @@ log.info """\
          iontorrent : ${params.iontorrent}
          multiple seq runs: ${params.multiple_sequencing_runs}
          extension : ${params.extension}
+         metadata: ${params.metadata}
          outdir   : ${params.outdir}
          profile : ${workflow.profile}
          """
