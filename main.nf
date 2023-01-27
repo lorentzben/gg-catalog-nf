@@ -2,7 +2,29 @@
 
 nextflow.enable.dsl=2
 
-params.input = "${projectDir}/reads"
+/*
+========================================================================================
+    INPUT AND VARIABLES
+========================================================================================
+*/
+
+// Input
+
+params.input = null
+
+single_end = params.single_end
+if (params.pacbio || params.iontorrent) {
+    single_end = true
+}
+
+params.multiple_sequencing_runs = false
+params.extension = "/*_R{1,2}_001.fastq.gz"
+
+// Set non-params Variables
+
+String[] fasta_extensions = [".fasta", ".fna", ".fa"] // this is the alternative ASV fasta input
+is_fasta_input = WorkflowGGCat.checkIfFileHasExtension( params.input.toString().toLowerCase(), fasta_extensions )
+
 params.metadata = "${projectDir}/metadata.tsv"
 params.outdir = "results"
 
@@ -10,6 +32,9 @@ log.info """\
          V I S U A L I Z E   P I P E L I N E    
          ===================================
          input    : ${params.input}
+         single_end: ${params.single_end}
+         multiple seq runs: ${params.multiple_sequencing_runs}
+         extension : ${params.extension}
          metadata : ${params.metadata}
          outdir   : ${params.outdir}
          profile : ${workflow.profile}
@@ -30,6 +55,14 @@ input_ch = Channel.fromPath(params.input, checkIfExists: true)
 
 
 workflow {
+
+    //
+    // Create a channel for input read files
+    //
+    PARSE_INPUT ( params.input, is_fasta_input, single_end, params.multiple_sequencing_runs, params.extension )
+
+    ch_reads = PARSE_INPUT.out.reads
+    ch_fasta = PARSE_INPUT.out.fasta
     TEST(input_ch)
     
 }
@@ -55,7 +88,7 @@ process TEST{
 }
 
 process FILTLONG{
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
+    //container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
     input: 
     path reads
