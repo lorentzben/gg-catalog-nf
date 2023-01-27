@@ -90,8 +90,8 @@ process TEST{
     '''
     #!/usr/bin/env bash
 
-    echo $reads > reads.txt
-    echo $fasta > fasta.txt
+    echo !{reads} > reads.txt
+    echo !{fasta} > fasta.txt
 
     '''
 
