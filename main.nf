@@ -72,7 +72,7 @@ workflow {
     //FILTLONG(tuple(id = ch_reads[0][0],single_end=false),ch_reads[1]))
     id_map = ch_reads.map { it.first() }
     fastq_ch = ch_reads.map{it.last()}
-    FILTLONG(id_map, fastq_ch)
+    FILTLONG(fastq_ch)
     
 }
 
