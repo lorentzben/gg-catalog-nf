@@ -98,7 +98,7 @@ process TEST{
 
 }
 
-/*
+
 process FILTLONG{
     //container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
@@ -126,7 +126,7 @@ process FILTLONG{
     filtlong --min_length 2000 --keep_percent 99 *.fastq | gzip > *.fastq.gz
     '''
 }
-*/
+
 
 process MINIMAP{
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/minimap2:1.0' : 'lorentzb/minimap2:1.0' }"
