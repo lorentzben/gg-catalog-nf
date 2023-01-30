@@ -70,8 +70,8 @@ workflow{
     ch_fasta = PARSE_INPUT.out.fasta
     //TEST(ch_reads, ch_fasta)
     
-    id_ch = ch_reads.map{it[0][0]}
-    path_ch = ch_reads.map{it[1][0]}
+    id_ch = ch_reads.map{it.first()}
+    path_ch = ch_reads.map{it.last()}
     FILTLONG(tuple(id_ch, '',path_ch))
     
 }
