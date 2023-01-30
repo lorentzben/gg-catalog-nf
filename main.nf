@@ -19,7 +19,6 @@ if (params.pacbio || params.iontorrent) {
     single_end = true
 }
 
-params.multiple_sequencing_runs = false
 params.extension = "/*_R{1,2}_001.fastq.gz"
 params.metadata = null
 
@@ -38,7 +37,6 @@ log.info """\
          single_end : ${params.single_end}
          pacbio : ${params.pacbio}
          iontorrent : ${params.iontorrent}
-         multiple seq runs: ${params.multiple_sequencing_runs}
          extension : ${params.extension}
          metadata: ${params.metadata}
          outdir   : ${params.outdir}
@@ -66,7 +64,7 @@ workflow {
     //
     // Create a channel for input read files
     //
-    PARSE_INPUT ( params.input, is_fasta_input, single_end, params.multiple_sequencing_runs, params.extension )
+    PARSE_INPUT ( params.input, is_fasta_input, single_end, params.extension )
 
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
