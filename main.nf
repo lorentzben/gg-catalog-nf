@@ -98,35 +98,7 @@ process TEST{
 
 }
 
-/*
-process FILTLONG{
-    //container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
-    input: 
-    path reads
-
-    //TODO if we get a locale issue, can we call the command through python or R?
-
-    output:
-    path ("*.fastq.gz"), emit: filtered
-
-    script:
-    '''
-    #!/usr/bin/env bash
- 
-    #READS="*.fastq"
-    
-
-    #for read in $READS; do
-    
-    #    READNAME=$read[::-6]
-    #    filtlong --min_length 2000 --keep_percent 99 $read | gzip > $READNAME.fastq.gz
-    #done
-
-    filtlong --min_length 2000 --keep_percent 99 *.fastq | gzip > *.fastq.gz
-    '''
-}
-*/
 
 process MINIMAP{
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/minimap2:1.0' : 'lorentzb/minimap2:1.0' }"
