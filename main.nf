@@ -50,7 +50,7 @@ log.info """\
   the program more readable (this is of course not mandatory)
 */
 //if don't work use projectDir
-include { FILTLONG } from "${moduleDir}/modules/nf-core/filtlong/main"
+//include { FILTLONG } from "${moduleDir}/modules/nf-core/filtlong/main"
 include { MINIMAP2_ALIGN } from "${moduleDir}/modules/nf-core/minimap2/align/main"
 include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/main"
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
@@ -69,10 +69,10 @@ workflow {
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
     //TEST(ch_reads, ch_fasta)
-    //FILTLONG(tuple(id = ch_reads[0][0],single_end=false),ch_reads[1]))
+    FILTLONG(tuple(id = ch_reads[0][0],single_end=false),ch_reads[1]))
     id_map = ch_reads.map { it.first() }
     fastq_ch = ch_reads.map{it.last()}
-    FILTLONG(fastq_ch)
+    FILTLONG(tuple(id_map, "", fastq_ch))
     
 }
 
