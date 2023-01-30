@@ -59,7 +59,7 @@ include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
 
 
-workflow {
+workflow{
 
     //
     // Create a channel for input read files
