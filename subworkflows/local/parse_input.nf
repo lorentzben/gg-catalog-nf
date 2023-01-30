@@ -13,15 +13,12 @@ def parse_samplesheet(LinkedHashMap row, single_end) {
     if (row.reverseReads == null && !single_end) {
         exit 1, "ERROR: Please check input samplesheet -> Column 'reverseReads' is missing. In case you do have only single ended reads, please specify '--single_end', '--pacbio', or '--iontorrent'."
     }
-    //Check if samplesheet contains a column run and empty fields
-    if (row.run != null && row.run == "") {
-        exit 1, "ERROR: Please check input samplesheet -> Column 'run' contains an empty field. Either remove column 'run' or fill each field with a value."
-    }
+    
     //read meta info
     def meta = [:]
     meta.id           = row.sampleID
     meta.single_end   = single_end.toBoolean()
-    meta.run          = row.run == null ? "1" : row.run
+
     //read data info
     def array = []
     if (!file(row.forwardReads).exists()) {
@@ -43,7 +40,6 @@ workflow PARSE_INPUT {
     input // file.tsv or folder
     is_fasta_input
     single_end
-    multiple_sequencing_runs
     extension
 
     main:
@@ -69,13 +65,10 @@ workflow PARSE_INPUT {
             // Folder input
 
             //Check folders in folder when multiple_sequencing_runs
-            folders = multiple_sequencing_runs ? "/*" : ""
             error_message = "\nCannot find any reads matching: \"${input}${folders}${extension}\"\n"
             error_message += "Please revise the input folder (\"--input\"): \"${input}\"\n"
             error_message += "and the input file pattern (\"--extension\"): \"${extension}\"\n"
             error_message += "*Please note: Path needs to be enclosed in quotes!*\n"
-            error_message += multiple_sequencing_runs ? "If you do not have multiple sequencing runs, please do not use \"--multiple_sequencing_runs\"!\n" : "If you have multiple sequencing runs, please add \"--multiple_sequencing_runs\"!\n"
-            error_message += "In any case, please consult the pipeline documentation.\n"
             if ( single_end ) {
                 //Get files - single end
                 Channel
@@ -85,7 +78,6 @@ workflow PARSE_INPUT {
                             def meta = [:]
                             meta.id           = read.baseName.toString().indexOf("_") != -1 ? read.baseName.toString().take(read.baseName.toString().indexOf("_")) : read.baseName
                             meta.single_end   = single_end.toBoolean()
-                            meta.run          = multiple_sequencing_runs ? read.take(read.findLastIndexOf{"/"})[-1] : "1"
                             [ meta, read ] }
                     .set { ch_reads }
             } else {
@@ -97,26 +89,8 @@ workflow PARSE_INPUT {
                             def meta = [:]
                             meta.id           = name.toString().indexOf("_") != -1 ? name.toString().take(name.toString().indexOf("_")) : name
                             meta.single_end   = single_end.toBoolean()
-                            meta.run          = multiple_sequencing_runs ? reads[0].take(reads[0].findLastIndexOf{"/"})[-1] : "1"
                             [ meta, reads ] }
                     .set { ch_reads }
-            }
-            if (multiple_sequencing_runs) {
-                //Get folder information
-                ch_reads
-                    .flatMap { meta, reads -> [ meta.run ] }
-                    .unique()
-                    .set { ch_folders }
-                //Report folders with sequencing files
-                ch_folders
-                    .collect()
-                    .subscribe {
-                        String folders = it.toString().replace("[", "").replace("]","")
-                        log.info "\nFound the folder(s) \"$folders\" containing sequencing read files matching \"${extension}\" in \"${input}\".\n" }
-                //Stop if folder count is 1 and multiple_sequencing_runs
-                ch_folders
-                    .count()
-                    .subscribe { if ( it == 1 ) exit 1, "Found only one folder with read data but \"--multiple_sequencing_runs\" was specified. Please review data input." }
             }
         }
 
