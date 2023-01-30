@@ -57,6 +57,7 @@ workflow PARSE_INPUT {
             // extracts read files from TSV and distribute into channels
             Channel
                 .fromPath(input)
+                .ifEmpty {exit 1, log.info "Cannot find path file ${tsvFile}"}
                 .splitCsv(header:true, sep:'\t')
                 .map { parse_samplesheet(it, single_end) }
                 .set { ch_reads }
