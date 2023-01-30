@@ -71,6 +71,7 @@ workflow {
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
     TEST(ch_reads, ch_fasta)
+    FILTLONG(ch_reads)
     
 }
 
@@ -112,16 +113,16 @@ process FILTLONG{
     '''
     #!/usr/bin/env bash
  
-    READS="*.fastq"
+    #READS="*.fastq"
     
 
-    for read in $READS; do
+    #for read in $READS; do
     
-        READNAME=$read[::-6]
-        filtlong --min_length 2000 --keep_percent 99 $read | gzip > $READNAME.fastq.gz
-    done
+    #    READNAME=$read[::-6]
+    #    filtlong --min_length 2000 --keep_percent 99 $read | gzip > $READNAME.fastq.gz
+    #done
 
-    filtlong --min_length 2000 --keep_percent 99 ../zhang/reads/duodenum/SRR19683891.fastq | gzip > SRR19683891.fastq.gz
+    filtlong --min_length 2000 --keep_percent 99 *.fastq | gzip > *.fastq.gz
     '''
 }
 
