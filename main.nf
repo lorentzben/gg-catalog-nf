@@ -69,7 +69,7 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    id_ch = ch_reads.map{it[0][0]}
+    id_ch = ch_reads.map{it.first()[0]}
     path_ch = ch_reads.map{it.last()}
     FILTLONG(id_ch,path_ch)
     
@@ -91,6 +91,7 @@ process FILTLONG{
     '''
     #!/usr/bin/env bash
 
+    echo !{reads} 
     echo !{meta}
 
     filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > out.fastq.gz
