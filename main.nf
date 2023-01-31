@@ -88,15 +88,15 @@ process FILTLONG{
 
     script:
     
-    '''
+    """
     #!/usr/bin/env bash
 
-    !{reads} 
-    !{meta} 
+    ${reads} 
+    ${meta} 
 
-    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > out.fastq.gz
+    filtlong --min_length 2000 --keep_percent 99 ${reads} | gzip > out.fastq.gz
 
-    '''
+    """
 
 }
 
