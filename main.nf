@@ -79,7 +79,7 @@ process FILTLONG{
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
     input:
-    tuple val(meta)
+    val(meta)
     path reads
 
     output:
