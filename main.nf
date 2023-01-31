@@ -91,8 +91,8 @@ process FILTLONG{
     '''
     #!/usr/bin/env bash
 
-    echo !{reads} 
-    echo !{meta}
+    !{reads} 
+    !{meta} 
 
     filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > out.fastq.gz
 
