@@ -71,7 +71,7 @@ workflow{
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
-    FILTLONG(tuple(id_ch),path_ch)
+    FILTLONG(id_ch[0],path_ch)
     
 }
 
@@ -92,7 +92,7 @@ process FILTLONG{
 
     
 
-    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > "!{meta}".fastq.gz
+    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > !{meta}.fastq.gz
 
     '''
 
