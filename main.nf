@@ -90,7 +90,9 @@ process FILTLONG{
     '''
     #!/usr/bin/env bash
 
-    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > !{meta}.fastq.gz
+    STUB=!{meta}
+
+    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > ${STUB}.fastq.gz
 
     '''
 
