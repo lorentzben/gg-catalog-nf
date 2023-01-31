@@ -87,11 +87,11 @@ process FILTLONG{
     path "*.fastq.gz", emit: filtered
 
     script:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    
     '''
     #!/usr/bin/env bash
 
-    echo ${prefix}
+    echo !{meta}
 
     filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > out.fastq.gz
 
