@@ -50,7 +50,7 @@ log.info """\
   the program more readable (this is of course not mandatory)
 */
 //if don't work use projectDir
-include { FILTLONG } from "${moduleDir}/modules/nf-core/filtlong/main"
+
 include { MINIMAP2_ALIGN } from "${moduleDir}/modules/nf-core/minimap2/align/main"
 include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/main"
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
@@ -68,32 +68,29 @@ workflow{
 
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
-    //TEST(ch_reads, ch_fasta)
-    
+
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
-    FILTLONG(tuple(id_ch, '',path_ch))
+    FILTLONG(id_ch,path_ch)
     
 }
 
-process TEST{
-    //container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/tidyverse:4.2.0' : 'lorentzb/tidyverse:4.2.0' }"
+process FILTLONG{
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
-    input: 
+    input:
+    tuple(meta)
     path reads
-    path fasta
 
     output:
-    path "reads.txt"
-    path "fasta.txt"
-    
+    path "*.fastq.gz", emit: filtered
+
     script:
 
     '''
     #!/usr/bin/env bash
 
-    echo !{reads} > reads.txt
-    echo !{fasta} > fasta.txt
+    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > !{meta[1]}.fastq.gz
 
     '''
 
