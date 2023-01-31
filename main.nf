@@ -69,7 +69,7 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    id_ch = ch_reads.map{it.first()}
+    id_ch = ch_reads.map{it.first()[0]}
     path_ch = ch_reads.map{it.last()}
     FILTLONG(id_ch,path_ch)
     
