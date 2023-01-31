@@ -76,6 +76,7 @@ workflow{
 }
 
 process FILTLONG{
+    label 'process_high'
     
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
