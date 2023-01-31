@@ -71,7 +71,7 @@ workflow{
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
-    FILTLONG(id_ch,path_ch)
+    FILTLONG(tuple(id_ch),path_ch)
     
 }
 
@@ -79,7 +79,7 @@ process FILTLONG{
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/filtlong:2.0' : 'lorentzb/filtlong:2.0' }"
 
     input:
-    val(meta)
+    tuple val(meta)
     path reads
 
     output:
@@ -90,9 +90,9 @@ process FILTLONG{
     '''
     #!/usr/bin/env bash
 
-    STUB=!{meta}
+    
 
-    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > ${STUB}.fastq.gz
+    filtlong --min_length 2000 --keep_percent 99 !{reads} | gzip > "!{meta}".fastq.gz
 
     '''
 
