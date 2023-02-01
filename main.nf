@@ -85,7 +85,7 @@ workflow{
     id_contam_ch = ch_contam_reads.map{it.first()}
     path_contam_ch = ch_contam_reads.map{it.last()}
 
-    MINIMAP2_INDEX(id_contam_ch, path_contam_ch)
+    MINIMAP2_INDEX(ch_contam_reads)
     
     
 }
