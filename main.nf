@@ -11,6 +11,7 @@ nextflow.enable.dsl=2
 // Input
 
 params.input = null
+params.contam = null
 params.pacbio = false
 params.iontorrent = false
 params.single_end = false
@@ -34,6 +35,7 @@ log.info """\
          V I S U A L I Z E   P I P E L I N E    
          ===================================
          input    : ${params.input}
+         contam    : ${params.contam}
          single_end : ${params.single_end}
          pacbio : ${params.pacbio}
          iontorrent : ${params.iontorrent}
@@ -54,6 +56,7 @@ log.info """\
 include { MINIMAP2_ALIGN } from "${moduleDir}/modules/nf-core/minimap2/align/main"
 include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/main"
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
+include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
@@ -72,6 +75,10 @@ workflow{
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
     FILTLONG(id_ch,path_ch)
+    //todo try to import the genomes as fasta, but if this doesn't work change is_fasta, but keep the extention
+    CONTAM_INPUT(params.contam, true, true, "*.fasta")
+    MINIMAP2_INDEX()
+    MINIMAP2_ALIGN()
     
 }
 
@@ -100,7 +107,6 @@ process FILTLONG{
     """
 
 }
-
 
 
 process MINIMAP{
