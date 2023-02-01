@@ -74,9 +74,18 @@ workflow{
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
+
     FILTLONG(id_ch,path_ch)
-    // todo try to import the genomes as fasta, but if this doesn't work change is_fasta, but keep the extention
-    CONTAM_INPUT(params.contam, true, true, "*.fasta")
+
+    CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
+
+    ch_contam_reads = CONTAM_INPUT.out.reads
+    ch_contam_fasta = CONTAM_INPUT.out.fasta
+
+    id_contam_ch = ch_contam_reads.map{it.first()}
+    path_contam_ch = ch_contam_reads.map{it.last()}
+
+    MINIMAP2_INDEX(id_contam_ch, path_contam_ch)
     
     
 }
