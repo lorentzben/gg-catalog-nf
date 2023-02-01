@@ -86,6 +86,7 @@ workflow{
     path_contam_ch = ch_contam_reads.map{it.last()}
 
     MINIMAP2_INDEX(ch_contam_reads)
+    MINIMAP2_ALIGN(MINIMAP2_INDEX.out.meta, FILTLONG.out.filtered, MINIMAP2_INDEX.out.index)
     
     
 }
