@@ -75,10 +75,9 @@ workflow{
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
     FILTLONG(id_ch,path_ch)
-    //todo try to import the genomes as fasta, but if this doesn't work change is_fasta, but keep the extention
+    // todo try to import the genomes as fasta, but if this doesn't work change is_fasta, but keep the extention
     CONTAM_INPUT(params.contam, true, true, "*.fasta")
-    MINIMAP2_INDEX()
-    MINIMAP2_ALIGN()
+    
     
 }
 
