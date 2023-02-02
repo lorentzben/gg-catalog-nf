@@ -15,6 +15,7 @@ params.contam = null
 params.pacbio = false
 params.iontorrent = false
 params.single_end = false
+params.publish_dir_mode = "copy"
 single_end = params.single_end
 if (params.pacbio || params.iontorrent) {
     single_end = true
@@ -86,7 +87,10 @@ workflow{
     path_contam_ch = ch_contam_reads.map{it.last()}
 
     MINIMAP2_INDEX(ch_contam_reads)
-    MINIMAP2_ALIGN(id_ch, FILTLONG.out.filtered, MINIMAP2_INDEX.out.index)
+    
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.filtered,path_contam_ch[1], true, false, true)
+
+    view(ref_1.bam)
     
     
 }
