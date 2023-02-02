@@ -15,7 +15,6 @@ params.contam = null
 params.pacbio = false
 params.iontorrent = false
 params.single_end = false
-params.publish_dir_mode = "copy"
 single_end = params.single_end
 if (params.pacbio || params.iontorrent) {
     single_end = true
