@@ -78,7 +78,15 @@ workflow{
 
     FILTLONG(id_ch,path_ch)
 
-    MINIMAP2_INDEX(tuple("contam-db",contam_ch))
+    CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
+
+    ch_contam_reads = CONTAM_INPUT.out.reads
+    ch_contam_fasta = CONTAM_INPUT.out.fasta
+
+    id_contam_ch = ch_contam_reads.map{it.first()}
+    path_contam_ch = ch_contam_reads.map{it.last()}
+    
+    MINIMAP2_INDEX(ch_contam_reads)
 
     ref_1 = MINIMAP2_ALIGN(FILTLONG.out.filtered,MINIMAP2_INDEX.out.index, true, false, true)
 
