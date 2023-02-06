@@ -60,6 +60,7 @@ include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
+contam_ch = Channel.fromPath(params.contam, checkIfExists: true)
 
 
 workflow{
@@ -77,17 +78,9 @@ workflow{
 
     FILTLONG(id_ch,path_ch)
 
-    CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
+    MINIMAP2_INDEX(contam_ch)
 
-    ch_contam_reads = CONTAM_INPUT.out.reads
-    ch_contam_fasta = CONTAM_INPUT.out.fasta
-
-    id_contam_ch = ch_contam_reads.map{it.first()}
-    path_contam_ch = ch_contam_reads.map{it.last()}
-
-    MINIMAP2_INDEX(ch_contam_reads)
-    
-    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.filtered,path_contam_ch[1], true, false, true)
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.filtered,MINIMAP2_INDEX.out.index, true, false, true)
 
     view(ref_1.bam)
     
