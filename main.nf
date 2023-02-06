@@ -77,6 +77,7 @@ workflow{
     path_ch = ch_reads.map{it.last()}
 
     id_ch.view()
+    path_ch.view()
     FILTLONG(id_ch,path_ch)
 
     CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
