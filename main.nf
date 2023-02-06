@@ -109,7 +109,7 @@ process FILTLONG{
 
     output:
     path "*.fastq.gz", emit: filtered
-    tuple val(meta.id), path("${meta.id}.fastq.gz"), emit: dual
+    tuple id:val(meta.id), path("${meta.id}.fastq.gz"), emit: dual
     
 
     script:
