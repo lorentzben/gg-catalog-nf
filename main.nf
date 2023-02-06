@@ -90,7 +90,7 @@ workflow{
 
     
 
-    ref_1 = MINIMAP2_ALIGN(tuple(id="contam",path=FILTLONG.out.filtered),MINIMAP2_INDEX.out.index, true, false, true)
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.dual,MINIMAP2_INDEX.out.index, true, false, true)
 
     view(ref_1.bam)
     
@@ -108,6 +108,7 @@ process FILTLONG{
 
     output:
     path "*.fastq.gz", emit: filtered
+    tuple val(meta), path("*.fastq.gz"), emit: dual
 
     script:
     
