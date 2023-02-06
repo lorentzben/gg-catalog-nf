@@ -90,6 +90,9 @@ workflow{
 
     MINIMAP2_INDEX(ch_contam_reads)
 
+    id_ch.groupBy { Tuple tup  -> tup.id }
+    .view()
+
     FILTLONG.out.dual.view()
 
     ref_1 = MINIMAP2_ALIGN(FILTLONG.out.dual,MINIMAP2_INDEX.out.index, true, false, true)
