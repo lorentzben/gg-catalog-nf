@@ -78,7 +78,7 @@ workflow{
 
     FILTLONG(id_ch,path_ch)
 
-    MINIMAP2_INDEX(contam_ch)
+    MINIMAP2_INDEX(tuple("contam-db",contam_ch))
 
     ref_1 = MINIMAP2_ALIGN(FILTLONG.out.filtered,MINIMAP2_INDEX.out.index, true, false, true)
 
