@@ -90,7 +90,7 @@ workflow{
 
     MINIMAP2_INDEX(ch_contam_reads)
 
-    id_ch.groupBy { Tuple tup  -> tup.id }
+    id_ch.map { Tuple tup  -> tup.id }
     .view()
 
     FILTLONG.out.dual.view()
