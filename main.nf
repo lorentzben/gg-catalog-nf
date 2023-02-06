@@ -85,10 +85,10 @@ workflow{
 
     id_contam_ch = ch_contam_reads.map{it.first()}
     path_contam_ch = ch_contam_reads.map{it.last()}
-    
+
     MINIMAP2_INDEX(ch_contam_reads)
 
-    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.filtered,MINIMAP2_INDEX.out.index, true, false, true)
+    ref_1 = MINIMAP2_ALIGN(tuple(id_ch,FILTLONG.out.filtered),MINIMAP2_INDEX.out.index, true, false, true)
 
     view(ref_1.bam)
     
