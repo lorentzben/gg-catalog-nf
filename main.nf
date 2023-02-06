@@ -88,6 +88,8 @@ workflow{
 
     MINIMAP2_INDEX(ch_contam_reads)
 
+    view(tuple(id_ch,FILTLONG.out.filtered))
+
     ref_1 = MINIMAP2_ALIGN(tuple(id_ch,FILTLONG.out.filtered),MINIMAP2_INDEX.out.index, true, false, true)
 
     view(ref_1.bam)
