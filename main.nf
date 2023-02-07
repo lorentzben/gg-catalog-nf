@@ -74,23 +74,11 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    ch_reads.view()
+    ch_reads.map{
+        it ->  [ it[0], [], it[1].flatten() ]
+    }.view()
 
-    ch_reads_mod = ch_reads.map {
-            meta, fastq ->
-            def fmeta = [:]
-            // Set meta.id
-            fmeta.id = meta
-            // Set meta.single_end
-            if (fastq.size() == 1) {
-                fmeta.single_end = true
-            } else {
-                fmeta.single_end = false
-            }
-            [ fmeta, fastq ]
-        }
 
-    ch_reads_mod.view()
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
