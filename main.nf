@@ -103,10 +103,6 @@ workflow{
 
     MINIMAP2_INDEX(ch_contam_reads)
 
-    id_ch.map { Tuple tup  -> tup.id }
-    .view()
-
-
     ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads,MINIMAP2_INDEX.out.index, true, false, true)
 
     ref_1.bam.view()
