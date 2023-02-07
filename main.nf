@@ -91,7 +91,7 @@ workflow{
 
     FILTLONG(ch_reads_mod)
 
-    FILTLONG.out.log.view()
+    FILTLONG.out.reads.view()
 
     CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
 
