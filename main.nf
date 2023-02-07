@@ -103,7 +103,7 @@ workflow{
     MINIMAP2_INDEX(ch_contam_reads)
 
     FILTLONG.out.reads.view()
-    MINIMAP2_ALIGN.out.index.view()
+    MINIMAP2_INDEX.out.index.view()
 
     ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,MINIMAP2_INDEX.out.index, true, false, true)
 
