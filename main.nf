@@ -57,7 +57,7 @@ include { MINIMAP2_ALIGN } from "${moduleDir}/modules/nf-core/minimap2/align/mai
 include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/main"
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
 include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
-//include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
+include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
