@@ -73,6 +73,8 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
+    ch_reads.view()
+
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
 
