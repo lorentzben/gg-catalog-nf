@@ -57,6 +57,7 @@ include { MINIMAP2_ALIGN } from "${moduleDir}/modules/nf-core/minimap2/align/mai
 include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/main"
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
 include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
+//include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
@@ -74,6 +75,22 @@ workflow{
     ch_fasta = PARSE_INPUT.out.fasta
 
     ch_reads.view()
+
+    ch_reads_mod = ch_reads.map {
+            meta, fastq ->
+            def fmeta = [:]
+            // Set meta.id
+            fmeta.id = meta
+            // Set meta.single_end
+            if (fastq.size() == 1) {
+                fmeta.single_end = true
+            } else {
+                fmeta.single_end = false
+            }
+            [ fmeta, fastq ]
+        }
+
+    ch_reads_mod.view()
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
