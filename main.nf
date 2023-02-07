@@ -74,18 +74,24 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    ch_reads.map{
+    ch_reads_mod = ch_reads.map{
         it ->  [ it[0], [], it[1].flatten() ]
-    }.view()
+    }
 
 
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
 
+    /*
     id_ch.view()
     path_ch.view()
-    FILTLONG(id_ch,path_ch)
+    //FILTLONG(id_ch,path_ch)
+    */
+
+    FILTLONG(ch_reads_mod)
+
+    FILTLONG.out.log.view()
 
     CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
 
@@ -108,7 +114,7 @@ workflow{
     
     
 }
-
+/*
 process FILTLONG{
     label 'process_high'
     
@@ -136,7 +142,7 @@ process FILTLONG{
     """
 
 }
-
+*/
 
 process MINIMAP{
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ? 'docker://lorentzb/minimap2:1.0' : 'lorentzb/minimap2:1.0' }"
