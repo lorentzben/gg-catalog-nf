@@ -106,11 +106,10 @@ workflow{
     id_ch.map { Tuple tup  -> tup.id }
     .view()
 
-    FILTLONG.out.dual.view()
 
-    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.dual,MINIMAP2_INDEX.out.index, true, false, true)
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads,MINIMAP2_INDEX.out.index, true, false, true)
 
-    view(ref_1.bam)
+    ref_1.bam.view()
     
     
 }
