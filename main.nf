@@ -91,8 +91,7 @@ workflow{
 
     FILTLONG(ch_reads_mod)
 
-    FILTLONG.out.reads.view()
-
+    
     CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
 
     ch_contam_reads = CONTAM_INPUT.out.reads
@@ -103,7 +102,10 @@ workflow{
 
     MINIMAP2_INDEX(ch_contam_reads)
 
-    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads,MINIMAP2_INDEX.out.index, true, false, true)
+    FILTLONG.out.reads.view()
+    MINIMAP2_ALIGN.out.index.view()
+
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,MINIMAP2_INDEX.out.index, true, false, true)
 
     ref_1.bam.view()
     
