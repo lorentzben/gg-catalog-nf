@@ -105,7 +105,10 @@ workflow{
     FILTLONG.out.reads.view()
     MINIMAP2_INDEX.out.index.view()
 
-    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,MINIMAP2_INDEX.out.index, true, false, true)
+    meta_ch = MINIMAP2_INDEX.out.index.map{it.first()}
+    index_path_ch = MINIMAP2_INDEX.out.index.map{it.last()}
+
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,index_path_ch, true, false, true)
 
     ref_1.bam.view()
     
