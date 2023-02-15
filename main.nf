@@ -90,7 +90,7 @@ workflow{
     */
 
     
-
+    FILTLONG(ch_reads_mod)
     
     CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
 
@@ -110,7 +110,7 @@ workflow{
     contam_path_ch = ch_contam_reads.map{it.last()}
 
     
-    ref_1 = MINIMAP2_ALIGN(FILTLONG(ch_reads_mod).out.reads ,contam_path_ch, true, false, true)
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
 
     ref_1.bam.view()
     
