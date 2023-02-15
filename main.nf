@@ -111,9 +111,13 @@ workflow{
 
     ch_reads_mod.view()
 
-    FILTLONG.out.reads.view()
     
-    MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
+
+    filtlong_mod = FILTLONG.out.reads.collect.map{
+        it ->  [ it[0], [], it[1].flatten() ]
+    }
+    
+    MINIMAP2_ALIGN(filtlong_mod ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
