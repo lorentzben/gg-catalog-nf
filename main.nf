@@ -103,8 +103,7 @@ workflow{
     MINIMAP2_INDEX(ch_contam_reads)
 
     FILTLONG.out.reads.view()
-    MINIMAP2_INDEX.out.index.view()
-
+    
     meta_ch = MINIMAP2_INDEX.out.index.map{it.first()}
     index_path_ch = MINIMAP2_INDEX.out.index.map{it.last()}
 
