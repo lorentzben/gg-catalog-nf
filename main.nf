@@ -111,9 +111,9 @@ workflow{
 
     ch_reads_mod.view()
 
-    
+    filtlong_reads = FILTLONG.out.reads.collect()
 
-    filtlong_mod = FILTLONG.out.reads.collect.map{
+    filtlong_mod = filtlong_reads.map{
         it ->  [ it[0], [], it[1].flatten() ]
     }
     
