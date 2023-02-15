@@ -108,8 +108,10 @@ workflow{
     meta_ch = MINIMAP2_INDEX.out.index.map{it.first()}
     index_path_ch = MINIMAP2_INDEX.out.index.map{it.last()}
 
-    ch_contam_reads.view()
-    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,ch_contam_reads, true, false, true)
+    contam_path_ch = ch_contam_reads.map{it.last()}
+
+    
+    ref_1 = MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
 
     ref_1.bam.view()
     
