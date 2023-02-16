@@ -101,9 +101,12 @@ workflow{
 
     contam_path_ch = ch_contam_reads.map{it.last()}
 
-    FILTLONG.out.reads.view()
+    FILTLONG.out.reads
+        .map{ meta, reads -> [ meta, reads ] }
+        .set{ ch_filtered }
+
     
-    MINIMAP2_ALIGN(FILTLONG.out.reads.collect() ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(ch_filtered ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
