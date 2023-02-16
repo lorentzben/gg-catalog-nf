@@ -74,24 +74,15 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    //ch_reads.view()
+    ch_reads.view()
 
     ch_reads_mod = ch_reads.map{
         it ->  [ it[0], [], it[1].flatten() ]
     }
 
-    ch_reads_mod.view()
-
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
-
-    /*
-    id_ch.view()
-    path_ch.view()
-    //FILTLONG(id_ch,path_ch)
-    */
-
-    
+   
     FILTLONG(ch_reads_mod)
     
     CONTAM_INPUT(params.contam, false, true, "*.fna.gz")
@@ -104,28 +95,15 @@ workflow{
 
     MINIMAP2_INDEX(ch_contam_reads)
 
-    //FILTLONG.out.reads.view()
     
     meta_ch = MINIMAP2_INDEX.out.index.map{it.first()}
     index_path_ch = MINIMAP2_INDEX.out.index.map{it.last()}
 
     contam_path_ch = ch_contam_reads.map{it.last()}
 
-    //ch_reads_mod.view()
-
-    filtlong_reads = FILTLONG.out.reads.collect()
-
+    FILTLONG.out.reads.view()
     
-    
-    //filtlong_reads.view()
-
-    filtlong_mod = FILTLONG.out.reads.map{
-        it ->  [it[0], [toString(it[1])]]
-    }
-
-    filtlong_mod.view()
-    
-    MINIMAP2_ALIGN(channel.of(filtlong_mod) ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
