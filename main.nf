@@ -115,7 +115,7 @@ workflow{
 
     filtlong_reads = FILTLONG.out.reads.collect()
 
-    FILTLONG.out.[0].view()
+    FILTLONG.out.[0]
     
     //filtlong_reads.view()
 
@@ -125,7 +125,7 @@ workflow{
 
     filtlong_mod.view()
     
-    MINIMAP2_ALIGN(filtlong_mod ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(channel.of(filtlong_mod) ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
