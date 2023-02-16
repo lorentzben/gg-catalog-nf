@@ -118,7 +118,7 @@ workflow{
     filtlong_reads.view()
 
     filtlong_mod = FILTLONG.out.reads.map{
-        it ->  [ [it[0]], [it[1]] ]
+        it ->  [[it[0]], [it[1]]]
     }
 
     filtlong_mod.view()
