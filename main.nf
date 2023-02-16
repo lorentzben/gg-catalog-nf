@@ -78,7 +78,7 @@ workflow{
         it ->  [ it[0], [], it[1].flatten() ]
     }
 
-
+    ch_reads.view()
 
     id_ch = ch_reads.map{it.first()}
     path_ch = ch_reads.map{it.last()}
@@ -112,6 +112,8 @@ workflow{
     ch_reads_mod.view()
 
     filtlong_reads = FILTLONG.out.reads.collect()
+    
+    filtlong_reads.view()
 
     filtlong_mod = filtlong_reads.map{
         it ->  [ it[0], [], it[1].flatten() ]
