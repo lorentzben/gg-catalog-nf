@@ -74,7 +74,7 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    ch_reads.view()
+    //ch_reads.view()
 
     ch_reads_mod = ch_reads.map{
         it ->  [ it[0], [], it[1].flatten() ]
@@ -111,17 +111,19 @@ workflow{
 
     contam_path_ch = ch_contam_reads.map{it.last()}
 
-    ch_reads_mod.view()
+    //ch_reads_mod.view()
 
     filtlong_reads = FILTLONG.out.reads.collect()
     
-    filtlong_reads.view()
+    //filtlong_reads.view()
 
     filtlong_mod = filtlong_reads.map{
-        it ->  [ it[0], [], it[1].flatten() ]
+        it ->  [ it[0], it[1].flatten() ]
     }
+
+    filtlong_mod.view()
     
-    MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(filtlong_mod ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
