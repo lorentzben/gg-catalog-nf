@@ -99,7 +99,9 @@ workflow{
     meta_ch = MINIMAP2_INDEX.out.index.map{it.first()}
     index_path_ch = MINIMAP2_INDEX.out.index.map{it.last()}
 
-    contam_path_ch = ch_contam_reads.map{it.last()}
+    ch_contam_reads
+        .map{it.last()}
+        .set{ contam_path_ch }
 
     FILTLONG.out.reads
         .map{ meta, reads -> [ meta, reads ] }
