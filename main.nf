@@ -103,7 +103,7 @@ workflow{
 
     FILTLONG.out.reads.view()
     
-    MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(FILTLONG.out.reads.collect() ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
