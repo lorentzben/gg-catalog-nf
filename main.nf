@@ -115,10 +115,10 @@ workflow{
 
     filtlong_reads = FILTLONG.out.reads.collect()
     
-    //filtlong_reads.view()
+    filtlong_reads.view()
 
     filtlong_mod = filtlong_reads.map{
-        it ->  [ it[0], it[1].flatten() ]
+        it ->  [ it[0], it[1] ]
     }
 
     filtlong_mod.view()
