@@ -105,6 +105,7 @@ workflow{
         .map{ meta, reads -> [ meta, reads ] }
         .set{ ch_filtered }
 
+    ch_filtered.view()
     
     MINIMAP2_ALIGN(ch_filtered ,contam_path_ch, true, false, true)
 
