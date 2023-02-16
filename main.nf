@@ -118,7 +118,7 @@ workflow{
     filtlong_reads.view()
 
     filtlong_mod = filtlong_reads.map{
-        it ->  [ it[0], it[1] ]
+        it ->  [ [id: it[0][1], single_end: it[0][3] ], [it[1]] ]
     }
 
     filtlong_mod.view()
