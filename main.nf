@@ -120,7 +120,7 @@ workflow{
     //filtlong_reads.view()
 
     filtlong_mod = FILTLONG.out.reads.map{
-        it ->  [it[0], path(it[1])]
+        it ->  [it[0], [toString(it[1])]]
     }
 
     filtlong_mod.view()
@@ -131,6 +131,7 @@ workflow{
     
     
 }
+
 /*
 process FILTLONG{
     label 'process_high'
