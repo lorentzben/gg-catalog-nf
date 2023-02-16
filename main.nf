@@ -115,7 +115,7 @@ workflow{
 
     filtlong_reads = FILTLONG.out.reads.collect()
 
-    FILTLONG.out.[0]
+    
     
     //filtlong_reads.view()
 
