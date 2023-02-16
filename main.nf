@@ -103,6 +103,8 @@ workflow{
         .map{it.last()}
         .set{ contam_path_ch }
 
+    ch_contam_reads.view()
+    
     FILTLONG.out.reads
         .map{ meta, reads -> [ meta, reads ] }
         .set{ ch_filtered }
