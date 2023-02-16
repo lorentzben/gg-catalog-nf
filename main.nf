@@ -114,8 +114,10 @@ workflow{
     //ch_reads_mod.view()
 
     filtlong_reads = FILTLONG.out.reads.collect()
+
+    FILTLONG.out.reads.view()
     
-    filtlong_reads.view()
+    //filtlong_reads.view()
 
     filtlong_mod = FILTLONG.out.reads.map{
         it ->  [it[0], [String(it[1])]]
