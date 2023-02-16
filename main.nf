@@ -121,7 +121,7 @@ workflow{
         it ->  [ it[0], [], it[1].flatten() ]
     }
     
-    MINIMAP2_ALIGN(FILTLONG.out.collect() ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(FILTLONG.out.reads ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
