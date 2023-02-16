@@ -123,7 +123,7 @@ workflow{
 
     filtlong_mod.view()
     
-    MINIMAP2_ALIGN(filtlong_mod ,contam_path_ch, true, false, true)
+    MINIMAP2_ALIGN(filtlong_reads ,contam_path_ch, true, false, true)
 
     //MINIMAP2_ALIGN.bam.view()
     
