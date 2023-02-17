@@ -112,6 +112,8 @@ workflow{
 
     SAMTOOLS_FASTQ(MINIMAP2_ALIGN.out.bam , false)
 
+    SAMTOOLS_FASTA(MINIMAP2_ALIGN.out.bam , false)
+
     //MINIMAP2_ALIGN.bam.view()
     
     
