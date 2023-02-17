@@ -58,6 +58,8 @@ include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/mai
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
 include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
 include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
+include { SAMTOOLS_FASTQ } from "${projectDir}/modules/nf-core/samtools/fastq/main"
+include { SAMTOOLS_FASTA } from "${projectDir}/modules/nf-core/samtools/fasta/main"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
@@ -108,6 +110,8 @@ workflow{
     ch_filtered.view()
     
     MINIMAP2_ALIGN(ch_filtered ,contam_path_ch.first(), true, false, true)
+
+    SAMTOOLS_FASTQ(MINIMAP2_ALIGN.out.bam , false)
 
     //MINIMAP2_ALIGN.bam.view()
     
