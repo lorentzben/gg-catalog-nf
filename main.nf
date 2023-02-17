@@ -74,8 +74,6 @@ workflow{
     ch_reads = PARSE_INPUT.out.reads
     ch_fasta = PARSE_INPUT.out.fasta
 
-    ch_reads.view()
-
     ch_reads_mod = ch_reads.map{
         it ->  [ it[0], [], it[1].flatten() ]
     }
@@ -102,8 +100,6 @@ workflow{
     ch_contam_reads
         .map{it.last()}
         .set{ contam_path_ch }
-
-    ch_contam_reads.view()
 
     FILTLONG.out.reads
         .map{ meta, reads -> [ meta, reads ] }
