@@ -118,7 +118,7 @@ workflow{
 
     // raw reads process
     
-    SEQKIT_STATS(ch_reads_mod.first(), ch_reads_mod.last())
+    SEQKIT_STATS(ch_reads)
 
     // filtlong filtered process
 
