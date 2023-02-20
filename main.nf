@@ -118,7 +118,9 @@ workflow{
 
     // raw reads process
     
-    SEQKIT_STATS(ch_reads.collect())
+    raw_reads = SEQKIT_STATS(ch_reads)
+
+    CSVTK_CONCAT(raw_reads.stats,'tsv','tsv')
 
     // filtlong filtered process
 
