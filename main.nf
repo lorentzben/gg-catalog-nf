@@ -116,6 +116,16 @@ workflow{
 
     SAMTOOLS_FASTA(MINIMAP2_ALIGN.out.bam , false)
 
+    // raw reads process
+
+    SEQKIT_STATS(ch_reads_mod)
+
+    SEQKIT_STATS.out.view()
+
+    // filtlong filtered process
+
+    // minimap2 reads
+
     //MINIMAP2_ALIGN.bam.view()
     
     
