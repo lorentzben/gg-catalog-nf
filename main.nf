@@ -120,6 +120,8 @@ workflow{
     
     raw_reads = SEQKIT_STATS(ch_reads)
 
+    raw_reads.view()
+
     CSVTK_CONCAT(raw_reads.stats,'tsv','tsv')
 
     // filtlong filtered process
