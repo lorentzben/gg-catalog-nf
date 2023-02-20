@@ -120,7 +120,7 @@ workflow{
     
     raw_reads = SEQKIT_STATS(ch_reads)
 
-    SEQKIT_STATS.out.stats.last().collect().view()
+    SEQKIT_STATS.out.stats.collect().view()
 
     CSVTK_CONCAT(SEQKIT_STATS.out.stats.last().collect(),'tsv','tsv')
 
