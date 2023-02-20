@@ -60,6 +60,8 @@ include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
 include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
 include { SAMTOOLS_FASTQ } from "${projectDir}/modules/nf-core/samtools/fastq/main"
 include { SAMTOOLS_FASTA } from "${projectDir}/modules/nf-core/samtools/fasta/main"
+include { SEQKIT_STATS } from "${projectDir}/modules/nf-core/seqkit/stats/main"
+include { CSVTK_CONCAT } from "${projectDir}modules/nf-core/csvtk/concat/main"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)

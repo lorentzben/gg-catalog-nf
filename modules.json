@@ -5,6 +5,11 @@
     "https://github.com/nf-core/modules.git": {
       "modules": {
         "nf-core": {
+          "csvtk/concat": {
+            "branch": "master",
+            "git_sha": "c8e35eb2055c099720a75538d1b8adb3fb5a464c",
+            "installed_by": ["modules"]
+          },
           "filtlong": {
             "branch": "master",
             "git_sha": "c8e35eb2055c099720a75538d1b8adb3fb5a464c",
@@ -28,6 +33,11 @@
           "samtools/fastq": {
             "branch": "master",
             "git_sha": "f7552d46aad5411343134cac5e4bfe1a66cb3872",
+            "installed_by": ["modules"]
+          },
+          "seqkit/stats": {
+            "branch": "master",
+            "git_sha": "c8e35eb2055c099720a75538d1b8adb3fb5a464c",
             "installed_by": ["modules"]
           }
         }
