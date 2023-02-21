@@ -120,44 +120,21 @@ workflow{
 
        
     raw_reads = SEQKIT_STATS(ch_reads)
-    /*
-    raw_reads_mod = raw_reads.stats.map{
-        it ->  [ id:"raw", single_end: true , it.last() ]
-    }
-    
-    raw_reads_mod.
-        .groupTuple()
-        .view()
-        .set{ch_unused}
-    */
-
-    raw_reads.stats
-        .map{ it.first() }
-        .collect()
-        .set{ch_raw_table_meta}
 
     raw_reads.stats
         .map{ it.last() }
         .collect()
         .set{ch_raw_table_loc}
-    
-    ch_raw_table_loc.view()
 
     Channel
         .of([id:"raw", single_end:true])
         .set{ch_meta_raw}
 
-    ch_meta_raw.view()
-
     ch_meta_raw
         .combine(ch_raw_table_loc)
-        .set{ch_test}
+        .set{ ch_raw_table }
     
-        
-    
-    ch_test.view()
-
-    //CSVTK_CONCAT([ ch_meta_raw.first(),ch_raw_table_loc],'tsv','tsv')
+    CSVTK_CONCAT(ch_raw_table,'tsv','tsv')
 
     // filtlong filtered process
 
