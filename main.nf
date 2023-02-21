@@ -120,11 +120,11 @@ workflow{
 
        
     raw_reads = SEQKIT_STATS(ch_reads)
-
+    /*
     raw_reads_mod = raw_reads.stats.map{
         it ->  [ id:"raw", single_end: true , it.last() ]
     }
-
+    */
     raw_reads_mod.
         .groupTuple()
         .view()
