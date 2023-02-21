@@ -118,7 +118,6 @@ workflow{
 
     // raw reads process
 
-    ch_reads.collect().view()
 
     raw_reads = SEQKIT_STATS(ch_reads)
 
@@ -133,10 +132,12 @@ workflow{
 
     
     ch_raw_table_loc.view()
-    
-    println tuple(ch_meta_raw, ch_raw_table_loc)
 
-    CSVTK_CONCAT(tuple(ch_meta_raw, ch_raw_table_loc),'tsv','tsv')
+    ch_meta_raw.cross(ch_raw_table_loc).view()
+    
+    //println tuple(ch_meta_raw, ch_raw_table_loc)
+
+    CSVTK_CONCAT([ch_meta_raw, ch_raw_table_loc],'tsv','tsv')
 
     // filtlong filtered process
 
