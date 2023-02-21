@@ -140,8 +140,13 @@ workflow{
         .map{ it.last() }
         .collect()
         .set{ch_raw_table_loc}
+        .view()
 
-    CSVTK_CONCAT([ [id:"raw", single_end:true] ,ch_raw_table_loc],'tsv','tsv')
+    Channel
+        .of([id:"raw", single_end:true])
+        .set{ch_meta_raw}
+
+    CSVTK_CONCAT([ ch_meta_raw.first(),ch_raw_table_loc],'tsv','tsv')
 
     // filtlong filtered process
 
