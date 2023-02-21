@@ -149,9 +149,11 @@ workflow{
 
     ch_meta_raw.view()
 
-    ch_raw_table_loc
-        .map{ it -> [ch_meta_raw, it]}
-        .set{ ch_test }
+    ch_meta_raw
+        .combine(ch_raw_table_loc)
+        .set{ch_test}
+    
+        
     
     ch_test.view()
 
