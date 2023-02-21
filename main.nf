@@ -122,7 +122,7 @@ workflow{
     raw_reads = SEQKIT_STATS(ch_reads)
 
     raw_reads_mod = raw_reads.stats.map{
-        it ->  [ [id:"raw", single_end: true], it.last() ]
+        it ->  [ id:"raw", single_end: true , it.last() ]
     }
 
     raw_reads_mod.
@@ -139,7 +139,7 @@ workflow{
         .collect()
         .set{ch_raw_table_loc}
 
-    CSVTK_CONCAT([[id:"raw",single_end:true],ch_raw_table_loc],'tsv','tsv')
+    CSVTK_CONCAT([[id:"raw", single_end:true],ch_raw_table_loc],'tsv','tsv')
 
     // filtlong filtered process
 
