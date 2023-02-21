@@ -149,6 +149,12 @@ workflow{
 
     ch_meta_raw.view()
 
+    ch_raw_table_loc
+        .map{ it -> [ch_meta_raw.first(), it]}
+        .set{ ch_test }
+    
+    ch_test.view()
+
     //CSVTK_CONCAT([ ch_meta_raw.first(),ch_raw_table_loc],'tsv','tsv')
 
     // filtlong filtered process
