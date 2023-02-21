@@ -125,9 +125,21 @@ workflow{
         it ->  [ [it.first()], [it.last()] ]
     }
 
+    raw_reads.stats
+        .map{ it.first() }
+        .collect()
+        .set{ch_raw_table_meta}
+
+    raw_reads.stats
+        .map{ it.last() }
+        .collect()
+        .set{ch_raw_table_loc}
+
+    ch_raw_table_meta.view()
+    ch_raw_table_loc.view()
     //SEQKIT_STATS.out.stats.collect().view()
 
-    raw_reads_mod.view()
+    //raw_reads_mod.view()
 
     //CSVTK_CONCAT(SEQKIT_STATS.out.stats.mix(),'tsv','tsv')
 
