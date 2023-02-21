@@ -117,10 +117,17 @@ workflow{
     SAMTOOLS_FASTA(MINIMAP2_ALIGN.out.bam , false)
 
     // raw reads process
-    
+
+       
     raw_reads = SEQKIT_STATS(ch_reads)
 
-    SEQKIT_STATS.out.stats.collect().view()
+    raw_reads_mod = raw_reads.stats.map{
+        it ->  [ it[0], it[1].flatten() ]
+    }
+
+    //SEQKIT_STATS.out.stats.collect().view()
+
+    raw_reads_mod.view()
 
     //CSVTK_CONCAT(SEQKIT_STATS.out.stats.mix(),'tsv','tsv')
 
