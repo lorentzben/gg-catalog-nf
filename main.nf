@@ -118,7 +118,8 @@ workflow{
 
     // raw reads process
 
-       
+    ch_reads.collect().view()
+
     raw_reads = SEQKIT_STATS(ch_reads)
 
     raw_reads.stats
