@@ -132,10 +132,12 @@ workflow{
 
     
     
-    ch_raw_table_loc.view()
-    Channel
-        .of([[id:"raw", single_end:true], ch_raw_table_loc])
+    ch_raw_table_loc
+        .map{
+            it -> [[id:"raw", single_end:true], it]
+        }
         .set{ch_test}
+
     
     ch_test.view()
     //println tuple(ch_meta_raw, ch_raw_table_loc)
