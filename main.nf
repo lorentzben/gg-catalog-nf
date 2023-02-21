@@ -133,7 +133,7 @@ workflow{
 
     raw_table = [
         [id:"raw", single_end:true],
-        [ch_raw_table_loc]
+        [ch_raw_table_loc.flatten()]
     ]
 
     raw_table.view()
