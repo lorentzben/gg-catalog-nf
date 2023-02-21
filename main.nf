@@ -136,13 +136,10 @@ workflow{
         .map{
             it -> [[id:"raw", single_end:true], it]
         }
-        .set{ch_test}
+        .set{ch_raw_table}
 
     
-    ch_test.view()
-    //println tuple(ch_meta_raw, ch_raw_table_loc)
-
-    //CSVTK_CONCAT([ch_meta_raw, ch_raw_table_loc],'tsv','tsv')
+    CSVTK_CONCAT(ch_raw_table,'tsv','tsv')
 
     // filtlong filtered process
 
