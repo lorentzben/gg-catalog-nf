@@ -133,7 +133,7 @@ workflow{
     
     ch_raw_table_loc.view()
 
-    [[id:"raw", single_end:true], ch_meta_raw.cross(ch_raw_table_loc)]
+    Channel([[id:"raw", single_end:true], ch_meta_raw.cross(ch_raw_table_loc)])
         .set{ch_test}
     
     ch_test.view()
