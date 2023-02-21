@@ -131,12 +131,12 @@ workflow{
         .of([id:"raw", single_end:true])
         .set{ch_meta_raw}
 
-    ch_meta_raw
-        .combine(ch_raw_table_loc)
-        .map{ it -> [it[0], [it[1]]]}
-        .set{ ch_raw_table }
+    raw_table = [
+        [id:"raw", single_end:true],
+        [ch_raw_table_loc]
+    ]
 
-    ch_raw_table.view()
+    raw_table.view()
 
     CSVTK_CONCAT(ch_raw_table,'tsv','tsv')
 
