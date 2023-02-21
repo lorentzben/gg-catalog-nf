@@ -121,8 +121,8 @@ workflow{
        
     raw_reads = SEQKIT_STATS(ch_reads)
 
-    raw_reads_mod = raw_reads.stats.collect().map{
-        it ->  [ it[0], it[1] ]
+    raw_reads_mod = raw_reads.stats.map{
+        it ->  [ [it.first()], [it.last()] ]
     }
 
     //SEQKIT_STATS.out.stats.collect().view()
