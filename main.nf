@@ -132,7 +132,7 @@ workflow{
 
     
     
-    println ch_raw_table_loc
+    ch_raw_table_loc.view()
     Channel
         .of([[id:"raw", single_end:true], ch_raw_table_loc])
         .set{ch_test}
