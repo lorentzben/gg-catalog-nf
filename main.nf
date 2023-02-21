@@ -137,7 +137,7 @@ workflow{
     
     //println tuple(ch_meta_raw, ch_raw_table_loc)
 
-    CSVTK_CONCAT([ch_meta_raw, ch_raw_table_loc],'tsv','tsv')
+    //CSVTK_CONCAT([ch_meta_raw, ch_raw_table_loc],'tsv','tsv')
 
     // filtlong filtered process
 
