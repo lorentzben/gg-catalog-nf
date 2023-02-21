@@ -132,11 +132,11 @@ workflow{
 
     ch_meta_raw
         .combine(ch_raw_table_loc)
-        .collect()
+        .map{ it -> [it[0], [it[1]]]}
         .set{ ch_raw_table }
 
     ch_raw_table.view()
-    
+
     CSVTK_CONCAT(ch_raw_table,'tsv','tsv')
 
     // filtlong filtered process
