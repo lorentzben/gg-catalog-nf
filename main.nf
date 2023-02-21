@@ -133,8 +133,10 @@ workflow{
     
     ch_raw_table_loc.view()
 
-    ch_meta_raw.cross(ch_raw_table_loc).view()
+    [[id:"raw", single_end:true], ch_meta_raw.cross(ch_raw_table_loc)]
+        .set{ch_test}
     
+    ch_test.view()
     //println tuple(ch_meta_raw, ch_raw_table_loc)
 
     //CSVTK_CONCAT([ch_meta_raw, ch_raw_table_loc],'tsv','tsv')
