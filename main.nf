@@ -140,11 +140,14 @@ workflow{
         .map{ it.last() }
         .collect()
         .set{ch_raw_table_loc}
-        .view()
+    
+    ch_raw_table_loc.view()
 
     Channel
         .of([id:"raw", single_end:true])
         .set{ch_meta_raw}
+
+    ch_meta_raw.view()
 
     CSVTK_CONCAT([ ch_meta_raw.first(),ch_raw_table_loc],'tsv','tsv')
 
