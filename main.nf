@@ -124,11 +124,12 @@ workflow{
     raw_reads_mod = raw_reads.stats.map{
         it ->  [ id:"raw", single_end: true , it.last() ]
     }
-    */
+    
     raw_reads_mod.
         .groupTuple()
         .view()
         .set{ch_unused}
+    */
 
     raw_reads.stats
         .map{ it.first() }
@@ -140,7 +141,7 @@ workflow{
         .collect()
         .set{ch_raw_table_loc}
 
-    //CSVTK_CONCAT([ [id:"raw", single_end:true] ,ch_raw_table_loc],'tsv','tsv')
+    CSVTK_CONCAT([ [id:"raw", single_end:true] ,ch_raw_table_loc],'tsv','tsv')
 
     // filtlong filtered process
 
