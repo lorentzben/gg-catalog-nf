@@ -131,10 +131,10 @@ workflow{
         .set{ch_meta_raw}
 
     
-    ch_raw_table_loc.view()
+    
 
     Channel
-        .of([[id:"raw", single_end:true], ch_meta_raw.cross(ch_raw_table_loc)])
+        .of([[id:"raw", single_end:true], ch_raw_table_loc])
         .set{ch_test}
     
     ch_test.view()
