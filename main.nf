@@ -160,7 +160,10 @@ workflow{
 
     // minimap2 reads
 
-    minimap_reads = SEQKIT_STATS_UNMAP(SAMTOOLS_FASTQ.out)
+    unmapped_reads = SAMTOOLS_FASTQ.out.fastq.concat(SAMTOOLS_FASTQ.out.interleaved).concat(SAMTOOLS_FASTQ.out.singleton).concat(SAMTOOLS_FASTQ.out.other)
+    //unmapped_reads = unmapped_reads.concat(SAMTOOLS_FASTQ.out.singleton)
+
+    minimap_reads = SEQKIT_STATS_UNMAP(unmapped_reads)
 
     minimap_reads.stats
         .map{ file(it.last()) }
