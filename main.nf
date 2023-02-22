@@ -160,7 +160,23 @@ workflow{
 
     // minimap2 reads
 
-    //MINIMAP2_ALIGN.bam.view()
+    minimap_reads = SEQKIT_STATS_UNMAP(SAMTOOLS_FASTQ.out)
+
+    minimap_reads.stats
+        .map{ file(it.last()) }
+        .collect()
+        .set{ch_minimap_table_loc}
+
+    ch_minimap_table_loc
+        .map{
+            it -> [[id: "filtlong"], it]
+        }
+        .set{ch_minimap_table}
+    
+    CSVTK_CONCAT_FILT(ch_minimap_table,'tsv','tsv')
+
+
+    
     
     
 }
