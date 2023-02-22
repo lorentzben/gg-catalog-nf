@@ -60,8 +60,8 @@ include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
 include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
 include { SAMTOOLS_FASTQ } from "${projectDir}/modules/nf-core/samtools/fastq/main"
 include { SAMTOOLS_FASTA } from "${projectDir}/modules/nf-core/samtools/fasta/main"
-include { SEQKIT_STATS } from "${projectDir}/modules/nf-core/seqkit/stats/main"
-include { CSVTK_CONCAT } from "${projectDir}/modules/nf-core/csvtk/concat/main"
+include { SEQKIT_STATS; SEQKIT_STATS as SEQKIT_STATS_FILT; SEQKIT_STATS as SEQKIT_STATS_UNMAP } from "${projectDir}/modules/nf-core/seqkit/stats/main"
+include { CSVTK_CONCAT; CSVTK_CONCAT as CSVTK_CONCAT_FILT; CSVTK_CONCAT as CSVTK_CONCAT_UNMAP } from "${projectDir}/modules/nf-core/csvtk/concat/main"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
@@ -143,7 +143,7 @@ workflow{
 
     // filtlong filtered process
 
-    filtlong_reads = SEQKIT_STATS(ch_filtered)
+    filtlong_reads = SEQKIT_STATS_FILT(ch_filtered)
 
     filtlong_reads.stats
         .map{ file(it.last()) }
@@ -156,7 +156,7 @@ workflow{
         }
         .set{ch_filtlong_table}
     
-    CSVTK_CONCAT(ch_filtlong_table,'tsv','tsv')
+    CSVTK_CONCAT_FILT(ch_filtlong_table,'tsv','tsv')
 
     // minimap2 reads
 
