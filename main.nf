@@ -143,6 +143,21 @@ workflow{
 
     // filtlong filtered process
 
+    filtlong_reads = SEQKIT_STATS(ch_filtered)
+
+    filtlong_reads.stats
+        .map{ file(it.last()) }
+        .collect()
+        .set{ch_filtlong_table_loc}
+
+    ch_filtlong_table_loc
+        .map{
+            it -> [[id: "filtlong"], it]
+        }
+        .set{ch_filtlong_table}
+    
+    CSVTK_CONCAT(ch_filtlong_table,'tsv','tsv')
+
     // minimap2 reads
 
     //MINIMAP2_ALIGN.bam.view()
