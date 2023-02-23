@@ -160,17 +160,32 @@ workflow{
 
     // minimap2 reads
 
-    unmapped_reads = SAMTOOLS_FASTQ.out.fastq.concat(SAMTOOLS_FASTQ.out.interleaved).concat(SAMTOOLS_FASTQ.out.singleton).concat(SAMTOOLS_FASTQ.out.other)
-
     SAMTOOLS_FASTQ.out.fastq
         .map{ 
-            it -> [[id : "fastq-"+it.first().id], it.last()]
+            it -> [[id : it.first().id+"-fastq"], it.last()]
             }
         .set{fastq_reads_ch}
 
-    fastq_reads_ch.view()
-    //unmapped_reads = unmapped_reads.concat(SAMTOOLS_FASTQ.out.singleton)
+    SAMTOOLS_FASTQ.out.interleaved
+        .map{
+            it -> [[id : it.first().id+"-interleaved"], it.last()]
+        }
+        .set{interleaved_reads_ch}
 
+    SAMTOOLS_FASTQ.out.singleton
+        .map{
+            it -> [[id : it.first().id+"-singleton"], it.last()]
+        }
+        .set{singleton_reads_ch}
+
+    SAMTOOLS_FASTQ.out.other
+        .map{
+            it -> [[id : it.first().id+"-other"], it.last()]
+        }
+        .set{other_reads_ch}
+
+    unmapped_reads = fastq_reads_ch.concat(interleaved_reads_ch).concat(singleton_reads_ch).concat(other_reads_ch)
+    
     minimap_reads = SEQKIT_STATS_UNMAP(unmapped_reads)
 
     minimap_reads.stats
@@ -184,7 +199,7 @@ workflow{
         }
         .set{ch_minimap_table}
     
-    //CSVTK_CONCAT_UNMAP(ch_minimap_table,'tsv','tsv')
+    CSVTK_CONCAT_UNMAP(ch_minimap_table,'tsv','tsv')
 
 
     
