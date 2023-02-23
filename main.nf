@@ -184,7 +184,7 @@ workflow{
         }
         .set{ch_minimap_table}
     
-    CSVTK_CONCAT_UNMAP(ch_minimap_table,'tsv','tsv')
+    //CSVTK_CONCAT_UNMAP(ch_minimap_table,'tsv','tsv')
 
 
     
