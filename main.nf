@@ -164,7 +164,7 @@ workflow{
 
     SAMTOOLS_FASTQ.out.fastq
         .map{ 
-            it -> [[id : "fastq-"it.first().id], it.last()]
+            it -> [[id : "fastq-"+it.first().id], it.last()]
             }
         .set{fastq_reads_ch}
 
