@@ -195,7 +195,7 @@ workflow{
 
     ch_minimap_table_loc
         .map{
-            it -> [[id: "filtlong"], it]
+            it -> [[id: "minimap"], it]
         }
         .set{ch_minimap_table}
     
