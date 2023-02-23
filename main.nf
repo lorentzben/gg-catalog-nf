@@ -161,6 +161,14 @@ workflow{
     // minimap2 reads
 
     unmapped_reads = SAMTOOLS_FASTQ.out.fastq.concat(SAMTOOLS_FASTQ.out.interleaved).concat(SAMTOOLS_FASTQ.out.singleton).concat(SAMTOOLS_FASTQ.out.other)
+
+    SAMTOOLS_FASTQ.out.fastq
+        .map{ 
+            it -> [String("fastq"+it.first().id)], it.last()
+            }
+        .set{fastq_reads_ch}
+
+    fastq_reads_ch.view()
     //unmapped_reads = unmapped_reads.concat(SAMTOOLS_FASTQ.out.singleton)
 
     minimap_reads = SEQKIT_STATS_UNMAP(unmapped_reads)
