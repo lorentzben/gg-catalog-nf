@@ -126,6 +126,10 @@ workflow{
 
     //SAMTOOLS_FASTA(SAMTOOLS_VIEW.out.bam , false)
 
+    SAMTOOLS_FASTQ(MINIMAP2_ALIGN.out.bam , false)
+
+    SAMTOOLS_FASTA(MINIMAP2_ALIGN.out.bam , false)
+
     // raw reads process
 
 
