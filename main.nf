@@ -119,8 +119,8 @@ workflow{
 
    
 
-    SAMTOOLS_VIEW(MINIMAP2_ALIGN.out.bam, [],[])
-    //SAMTOOLS_VIEW(ch_aligned.first())
+    //SAMTOOLS_VIEW(MINIMAP2_ALIGN.out.bam, [],[])
+    SAMTOOLS_VIEW(ch_aligned, [], [])
 
     SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
 
