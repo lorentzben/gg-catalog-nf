@@ -117,6 +117,9 @@ workflow{
         .map{ meta, reads -> [ meta, reads, [] ] }
         .set{ ch_aligned }
 
+    MINIMAP2_ALIGN.out.bam.view()
+    ch_aligned.view()
+
     SAMTOOLS_VIEW(ch_aligned)
 
     SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
