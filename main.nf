@@ -113,7 +113,11 @@ workflow{
 
     MINIMAP2_ALIGN(ch_filtered ,contam_path_ch.first(), true, false, true)
 
-    SAMTOOLS_VIEW(MINIMAP2_ALIGN.out.bam, [])
+    MINIMAP2_ALIGN.out.bam
+        .map{ meta, reads -> [ meta, reads, [] ] }
+        .set{ ch_aligned }
+
+    SAMTOOLS_VIEW(ch_aligned)
 
     SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
 
