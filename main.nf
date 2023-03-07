@@ -113,7 +113,7 @@ workflow{
 
     MINIMAP2_ALIGN(ch_filtered ,contam_path_ch.first(), true, false, true)
 
-    SAMTOOLS_VIEW(MINIMAP2_ALIGN.out.bam)
+    SAMTOOLS_VIEW(MINIMAP2_ALIGN.out.bam, [])
 
     SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
 
