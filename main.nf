@@ -120,7 +120,7 @@ workflow{
     MINIMAP2_ALIGN.out.bam.view()
     ch_aligned.view()
 
-    SAMTOOLS_VIEW(ch_aligned)
+    SAMTOOLS_VIEW(ch_aligned[1], ch_aligned[2], ch_aligned[3])
 
     SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
 
