@@ -58,6 +58,7 @@ include { MINIMAP2_INDEX } from "${moduleDir}/modules/nf-core/minimap2/index/mai
 include { PARSE_INPUT } from "${projectDir}/subworkflows/local/parse_input"
 include { CONTAM_INPUT } from "${projectDir}/subworkflows/local/contam_input"
 include { FILTLONG } from "${projectDir}/modules/nf-core/filtlong/main"
+include { SAMTOOLS_VIEW } from "${projectDir}/modules/nf-core/samtools/view/main"
 include { SAMTOOLS_FASTQ } from "${projectDir}/modules/nf-core/samtools/fastq/main"
 include { SAMTOOLS_FASTA } from "${projectDir}/modules/nf-core/samtools/fasta/main"
 include { SEQKIT_STATS; SEQKIT_STATS as SEQKIT_STATS_FILT; SEQKIT_STATS as SEQKIT_STATS_UNMAP } from "${projectDir}/modules/nf-core/seqkit/stats/main"
