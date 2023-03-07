@@ -114,21 +114,21 @@ workflow{
     MINIMAP2_ALIGN(ch_filtered ,contam_path_ch.first(), true, false, true)
 
     MINIMAP2_ALIGN.out.bam
-        .map{ meta, reads -> [ meta, reads, [] ] }
+        .map{ meta, reads -> [ meta, file(reads), [] ] }
         .set{ ch_aligned }
 
     MINIMAP2_ALIGN.out.bam.view()
     ch_aligned.view()
 
-    //SAMTOOLS_VIEW(ch_aligned)
+    SAMTOOLS_VIEW(ch_aligned)
 
-    //SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
+    SAMTOOLS_FASTQ(SAMTOOLS_VIEW.out.bam , false)
 
-    //SAMTOOLS_FASTA(SAMTOOLS_VIEW.out.bam , false)
+    SAMTOOLS_FASTA(SAMTOOLS_VIEW.out.bam , false)
 
-    SAMTOOLS_FASTQ(MINIMAP2_ALIGN.out.bam , false)
+    //SAMTOOLS_FASTQ(MINIMAP2_ALIGN.out.bam , false)
 
-    SAMTOOLS_FASTA(MINIMAP2_ALIGN.out.bam , false)
+    //SAMTOOLS_FASTA(MINIMAP2_ALIGN.out.bam , false)
 
     // raw reads process
 
