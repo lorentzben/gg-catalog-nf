@@ -15,6 +15,7 @@ params.contam = null
 params.pacbio = false
 params.iontorrent = false
 params.single_end = false
+params.genes = null
 single_end = params.single_end
 if (params.pacbio || params.iontorrent) {
     single_end = true
@@ -41,6 +42,7 @@ log.info """\
          iontorrent : ${params.iontorrent}
          extension : ${params.extension}
          metadata: ${params.metadata}
+         gene_lib : ${params.genes}
          outdir   : ${params.outdir}
          profile : ${workflow.profile}
          """
@@ -70,6 +72,7 @@ include { BEDTOOLS_COVERAGE } from "${projectDir}/modules/nf-core/bedtools/cover
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
 contam_ch = Channel.fromPath(params.contam, checkIfExists: true)
+gene_ch = Channel.fromPath(params.genes, checkIfExists: true)
 
 
 workflow{
@@ -218,7 +221,8 @@ workflow{
     
     CSVTK_CONCAT_UNMAP(ch_minimap_table,'tsv','tsv')
 
-
+    gene_meta = [ id:'gene_library', single_end:false ]
+    BWAMEM2_INDEX([gene_meta, gene_ch])
     
     
     
