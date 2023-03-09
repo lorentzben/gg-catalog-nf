@@ -63,6 +63,9 @@ include { SAMTOOLS_FASTQ } from "${projectDir}/modules/nf-core/samtools/fastq/ma
 include { SAMTOOLS_FASTA } from "${projectDir}/modules/nf-core/samtools/fasta/main"
 include { SEQKIT_STATS; SEQKIT_STATS as SEQKIT_STATS_FILT; SEQKIT_STATS as SEQKIT_STATS_UNMAP } from "${projectDir}/modules/nf-core/seqkit/stats/main"
 include { CSVTK_CONCAT; CSVTK_CONCAT as CSVTK_CONCAT_FILT; CSVTK_CONCAT as CSVTK_CONCAT_UNMAP } from "${projectDir}/modules/nf-core/csvtk/concat/main"
+include { BWAMEM2_MEM } from "${projectDir}/modules/nf-core/bwamem2/mem/main"
+include { BWAMEM2_INDEX } from "${projectDir}/modules/nf-core/bwamem2/index/main"
+include { BEDTOOLS_COVERAGE } from "${projectDir}/modules/nf-core/bedtools/coverage/main"
 
 
 input_ch = Channel.fromPath(params.input, checkIfExists: true)
