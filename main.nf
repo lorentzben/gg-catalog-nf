@@ -70,9 +70,8 @@ include { BWAMEM2_INDEX } from "${projectDir}/modules/nf-core/bwamem2/index/main
 include { BEDTOOLS_COVERAGE } from "${projectDir}/modules/nf-core/bedtools/coverage/main"
 
 
-input_ch = Channel.fromPath(params.input, checkIfExists: true)
-contam_ch = Channel.fromPath(params.contam, checkIfExists: true)
-gene_ch = Channel.fromPath(params.genes, checkIfExists: true)
+
+gene_ch = file(params.genes, checkIfExists: true)
 
 
 workflow{
